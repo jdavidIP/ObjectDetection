@@ -1,23 +1,31 @@
 {% extends "layout.html"%}
 {% block title %}
-Prediction - Hand Sign Digit Recognition
+Detector de Objetos
 {% endblock %}
 
 {% block content %}
 <div class="container py-5">
 
     <header class="text-white text-center">
-        <h1 class="display-4">Hand Sign Digit Language Detection</h1>
-        <p class="lead mb-5">You will see the prediction of the input image.</p>
+        <h1 class="display-4">Detector de Objetos</h1>
+        <p class="lead mb-5">Ya vera su imagen procesada.</p>
     </header>
 
     <header class="text-white text-center">
-        <h1 class="display-5">Prediction</h1>
-        {% if predictions %}
-        <h2 class="display-4 text-dark font-weight-bold">{{predictions}}</h2>
+        <h1 class="display-5">Resultado: </h1>
+        {% if image %}
+        <img src="data:image/jpeg;base64,{{ image }}" alt="Processed Image" class="img-fluid">
         {% else %}
-        <h2 class="display-4 text-dark font-weight-bold">{{err}}</h2>
+        <h2 class="display-4 text-dark font-weight-bold">{{ err }}</h2>
         {% endif %}
+
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <a href="{{ url_for('main') }}" class="btn btn-primary">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
     </header>
 </div>
 {% endblock %}

@@ -1,31 +1,40 @@
-# Importing required libs
+import cv2
+import os
+import base64
 from flask import Flask, render_template, request
-from model import preprocess_img, predict_result
+from model import image_processing
+import tempfile
 
-# Instantiating flask app
 app = Flask(__name__)
 
-
-# Home route
 @app.route("/")
 def main():
     return render_template("index.html")
 
-
-# Prediction route
-@app.route('/prediction', methods=['POST'])
-def predict_image_file():
+@app.route('/detection', methods=['GET', 'POST'])
+def detect_image_file():
     try:
         if request.method == 'POST':
-            img = preprocess_img(request.files['file'].stream)
-            pred = predict_result(img)
-            return render_template("result.html", predictions=str(pred))
+            uploaded_file = request.files['file']
+            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".jpg")
+            
+            uploaded_file.save(temp_file.name)
+            processed_image = image_processing(temp_file.name)
 
-    except:
-        error = "File cannot be processed."
+            _, buffer = cv2.imencode('.jpg', processed_image)
+            image_encoded = base64.b64encode(buffer).decode('utf-8')
+
+            temp_file.close()
+            os.remove(temp_file.name)
+
+            return render_template("result.html", image=image_encoded)
+        else:
+            error = "Metodo invalido."
+            return render_template("result.html", err=error)
+
+    except Exception as e:
+        error = "Archivo no pudo ser procesado."
         return render_template("result.html", err=error)
 
-
-# Driver code
 if __name__ == "__main__":
     app.run(port=9000, debug=True)

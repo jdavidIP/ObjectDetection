@@ -1,15 +1,14 @@
 {% extends "layout.html"%}
 {% block title %}
-Hand Sign Digit Recognition
+Detector de Objetos
 {% endblock %}
 
 {% block content %}
 <div class="container py-5">
 
     <header class="text-white text-center">
-        <h1 class="display-4">Hand Sign Digit Language Detection</h1>
-        <p class="lead mb-5">A webapp to detect a digit using hand sign language. Just drop an image of Hand Digit Sign
-            and see the magic.</p>
+        <h1 class="display-4">Detector de Objetos</h1>
+        <p class="lead mb-5">Una pagina para detectar ciertos objetos en fotos. Suba una foto y su imagen sera procesada.</p>
     </header>
 
 
@@ -17,21 +16,20 @@ Hand Sign Digit Recognition
         <div class="col-lg-6 mx-auto">
 
             <!-- Upload image input-->
-            <form action="{{ url_for('predict_image_file') }}" enctype="multipart/form-data" method="POST">
+            <form action="{{ url_for('detect_image_file') }}" enctype="multipart/form-data" method="POST">
                 <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
                     <input class="form-control border-0" id="upload" name="file" type="file">
-                    <label class="font-weight-light text-muted" for="upload" id="upload-label">Choose file</label>
+                    <label class="font-weight-light text-muted" for="upload" id="upload-label">Escoja una Imagen</label>
                     <div class="input-group-append">
                         <label class="btn btn-light m-0 rounded-pill px-4" for="upload"> <i
                                 class="fa fa-cloud-upload mr-2 text-muted"></i><small
-                                class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+                                class="text-uppercase font-weight-bold text-muted">Escoja una Imagen</small></label>
                     </div>
                 </div>
 
 
                 <!-- Uploaded image area-->
-                <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box
-                    below.</p>
+                <p class="font-italic text-white text-center">Su imagen sera procesada en la caja.</p>
                 <div class="image-area mt-4"><img alt="" class="img-fluid rounded shadow-sm mx-auto d-block"
                                                   id="imageResult" name="imageResult"
                                                   src="#"></div>
